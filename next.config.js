@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: true
+  },
   images: {
     domains: [
-      "googleusercontent.com",
-      "oaidalleapiprodscus.blob.core.windows.net",
-      "cdn.openai.com"
-    ]
+      "res.cloudinary.com",
+    ],
   },
-}
+};
 
 module.exports = nextConfig

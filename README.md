@@ -1,12 +1,11 @@
-# Build a SaaS AI Platform with Next.js 13, React, Tailwind, Prisma, Stripe | Full Tutorial 2023
+# Build a SaaS AI Companion with Next.js 13, React, Tailwind, Prisma, Stripe | Full Tutorial 2023
 
-![Copy of Copy of Copy of Fullstack Twitter Clone](https://github.com/AntonioErdeljac/next13-ai-saas/assets/23248726/c47e604a-b50b-4eb0-b420-fda20908f522)
-
+![Copy of Copy of Copy of Copy of Fullstack Twitter Clone (1)](https://github.com/AntonioErdeljac/next13-ai-companion/assets/23248726/ef2913b1-eafe-4829-9018-f2ca5a7ba651)
 
 
 This is a repository for Build a SaaS AI Platform with Next.js 13, React, Tailwind, Prisma, Stripe | Full Tutorial 2023.
 
-[VIDEO TUTORIAL](https://www.youtube.com/watch?v=ffJ38dBzrlY)
+[VIDEO TUTORIAL](https://www.youtube.com/watch?v=PjYWpd7xkaM)
 
 Features:
 
@@ -60,6 +59,15 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 OPENAI_API_KEY=
 REPLICATE_API_TOKEN=
 
+PINECONE_API_KEY=
+PINECONE_ENVIRONMENT=
+PINECONE_INDEX=
+
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+
 DATABASE_URL=
 
 STRIPE_API_KEY=
@@ -75,6 +83,11 @@ Add MySQL Database (I used PlanetScale)
 ```shell
 npx prisma db push
 
+```
+
+Seed categories:
+```shell
+node scripts/seed.ts
 ```
 
 ### Start the app

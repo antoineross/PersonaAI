@@ -1,21 +1,64 @@
+"use client";
+
+import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
+import { Poppins } from "next/font/google";
+import { Sparkles } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { MobileSidebar } from "@/components/mobile-sidebar";
-import { getApiLimitCount } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscription";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
+import { useProModal } from "@/hooks/use-pro-modal";
 
-const Navbar = async () => {
-  const apiLimitCount = await getApiLimitCount();
-  const isPro = await checkSubscription();
+import { Twitter } from "lucide-react"
+import { Github } from "lucide-react"
+
+const font = Poppins({ weight: "600", subsets: ["latin"] });
+interface NavbarProps {
+  isPro: boolean;
+}
+
+export const Navbar = ({
+  isPro
+}: NavbarProps) => {
+  const proModal = useProModal();
+
+  const handleTwitterClick = () => {
+    window.open("https://twitter.com/antoineross___", "_blank");
+  };
+  const handleGithubClick = () => {
+    window.open("https://github.com/antoineross", "_blank");
+  };
 
   return ( 
-    <div className="flex items-center p-4">
-      <MobileSidebar isPro={isPro} apiLimitCount={apiLimitCount} />
-      <div className="flex w-full justify-end">
+    <div className="fixed w-full z-50 flex justify-between items-center py-2 px-4 h-16 border-b border-primary/10 bg-secondary">
+      <div className="flex items-center">
+        <MobileSidebar isPro={isPro} />
+        <Link href="/">
+          <h1 className={cn("hidden md:block text-xl md:text-3xl font-bold text-primary", font.className)}>
+            JARVIS
+          </h1>
+        </Link>
+      </div>
+      
+
+    <div className="flex items-center gap-x-1 justify-end">
+      <Button variant="ghost" size="icon" onClick={handleTwitterClick}>
+        <Twitter className="h-4 w-4" />
+      </Button>
+      <Button variant="ghost" size="icon" onClick={handleGithubClick}>
+        <Github className="h-4 w-4" /> 
+      </Button>
+        {!isPro && (
+          <Button onClick={proModal.onOpen} size="sm" variant="premium">
+            Upgrade
+            <Sparkles className="h-4 w-4 fill-white text-white ml-2" />
+          </Button>
+        )}
+        <ModeToggle />
         <UserButton afterSignOutUrl="/" />
       </div>
     </div>
-   );
+  );
 }
- 
-export default Navbar;

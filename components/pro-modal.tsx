@@ -1,28 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
-import { Check, Zap } from "lucide-react";
-import { toast } from "react-hot-toast";
 
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
+import {
+  Dialog,
+  DialogContent,
   DialogDescription,
-  DialogFooter
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { useProModal } from "@/hooks/use-pro-modal";
-import { tools } from "@/constants";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 
 export const ProModal = () => {
   const proModal = useProModal();
+  const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
 
   const onSubscribe = async () => {
     try {
@@ -31,46 +34,41 @@ export const ProModal = () => {
 
       window.location.href = response.data.url;
     } catch (error) {
-      toast.error("Something went wrong");
+      toast({
+        description: "Something went wrong",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   }
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
-            <div className="flex items-center gap-x-2 font-bold text-xl">
-              Upgrade to Genius
-              <Badge variant="premium" className="uppercase text-sm py-1">
-                pro
-              </Badge>
-            </div>
+        <DialogHeader className="space-y-4">
+          <DialogTitle className="text-center">
+            Upgrade to Pro
           </DialogTitle>
-          <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
-            {tools.map((tool) => (
-              <Card key={tool.href} className="p-3 border-black/5 flex items-center justify-between">
-                <div className="flex items-center gap-x-4">
-                  <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                    <tool.icon className={cn("w-6 h-6", tool.color)} />
-                  </div>
-                  <div className="font-semibold text-sm">
-                    {tool.label}
-                  </div>
-                </div>
-                <Check className="text-primary w-5 h-5" />
-              </Card>
-            ))}
+          <DialogDescription className="text-center space-y-2">
+            Create
+            <span className="text-sky-500 mx-1 font-medium">Custom AI</span>
+            Companions!
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button disabled={loading} onClick={onSubscribe} size="lg" variant="premium" className="w-full">
-            Upgrade
-            <Zap className="w-4 h-4 ml-2 fill-white" />
+        <Separator />
+        <div className="flex justify-between">
+          <p className="text-2xl font-medium">
+            $9<span className="text-sm font-normal">.99 / mo</span>
+          </p>
+          <Button onClick={onSubscribe} disabled={loading} variant="premium">
+            Subscribe
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
