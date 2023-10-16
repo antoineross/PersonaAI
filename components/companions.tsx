@@ -38,15 +38,15 @@ export const Companions = ({
         <Card key={item.name} className="bg-primary/10 rounded-xl cursor-pointer hover:opacity-75 transition border-0">
           <Link href={`/chat/${item.id}`}>
             <CardHeader className="flex items-center justify-center text-center text-muted-foreground">
-              <div className="relative w-32 h-32">
+              <div className="flex relative w-24 h-24">
                 <Image
                   src={item.src}
-                  fill
+                  layout= "fill"
                   className="rounded-xl object-cover"
                   alt="Character"
                 />
               </div>
-              <p className="font-bold">
+              <p className="font-bold text-sm">
                 {item.name}
               </p>
               <p className="text-xs">
