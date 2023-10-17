@@ -1,4 +1,4 @@
-# Building a SaaS AI Companion Startup with Next.js 13, React, Tailwind, Prisma, Stripe, OpenAI 
+# SaaS AI Companion Startup Boilercode with Next.js 13, React, Tailwind, Prisma, Stripe, OpenAI 
 
 Features:
 
